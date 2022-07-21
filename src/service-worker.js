@@ -70,3 +70,72 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+
+
+//Funktionen für Notification Test React Cookbook FUNKTIONIERT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+self.addEventListener('message', (event) => {
+    
+    if (event.data && event.data.type === 'DO_SLOW_THING') {
+      setTimeout(() => {
+        console.log('Slow thing finished!')
+        if (event.data.notifyMe) {
+          self.registration.showNotification('Slow thing finished!', {
+            body: 'Now get on with your life',
+            icon: './icons/512x512.png',
+            vibrate: [100, 100, 100, 200, 200, 200, 100, 100, 100],
+            // tag: 'some-id-if-you-do-not-want-duplicates'
+          })
+        }
+      }, 10000)
+    }
+
+    if (event.data && event.data.type === 'EVENT_ADDED') {
+          console.log('Neuer Termin wurde hinzugefügt')
+          if (event.data.notifyMe) {
+            self.registration.showNotification('Neuer Termin wurde hinzugefügt!', {
+              body: 'Seh dir den Termin im Kalender an',
+              icon: './icons/512x512.png',
+              vibrate: [100, 100, 100, 200, 200, 200, 100, 100, 100],
+              // tag: 'some-id-if-you-do-not-want-duplicates'
+            })
+          }
+      }
+
+      if (event.data && event.data.type === 'EVENT_DELETED') {
+          console.log('Termin wurde gelöscht')
+          if (event.data.notifyMe) {
+            self.registration.showNotification('Der Termin wurde entfernt!', {
+              body: 'Jetzt einen neuen Termin anlegen',
+              icon: './icons/512x512.png',
+              vibrate: [100, 100, 100, 200, 200, 200, 100, 100, 100],
+              // tag: 'some-id-if-you-do-not-want-duplicates'
+            })
+          }
+      }
+  })
+
+  self.addEventListener('notificationclick', (event) => {
+    event.notification.close()
+  
+    event.waitUntil(
+      self.clients
+        .matchAll({
+          type: 'window',
+        })
+        .then((clientList) => {
+          const returnPath = '/'
+  
+          const tab = clientList.find((t) => {
+            return t.url === self.location.origin + returnPath
+          })
+          if (tab && 'focus' in tab) {
+            tab.focus()
+          } else if (self.clients.openWindow) {
+            self.clients.openWindow(returnPath)
+          }
+        })
+    )
+  })
+
+  //ende

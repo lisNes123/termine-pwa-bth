@@ -1,38 +1,286 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+* {
+  margin: 0;
+  font-family: "Quicksand";
+}
+
 .App {
-  text-align: center;
+  max-height: 100vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.headertitle h3 {
+  margin-bottom: 0 !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.btn1 {
+  background-color: #218199 !important;
+  border: none !important;
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/*----------Header und Sidebar----------*/
+.headerbar {
+  padding: 0.8rem;
+  display: flex;
+  width: 100vw;
+  margin: 0 auto;
+  background-color: rgb(78, 78, 78);
+  position: fixed;
+  z-index: 1000;
+  align-items: center;
+}
+
+.headerbar h3 {
+  color: #ffffff;
+  padding-left: 1rem;
+}
+
+.activeLink {
+  text-decoration: none;
+  color: #218199 !important;
+  background-color: #ffffff;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+  color: #ffffff !important;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.sidebarDiv {
+  /* top: 0; */
+  left: -100%;
+  position: fixed;
+  width: 250px;
+  background-color: #218199;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 0.75rem;
+  transition: 350ms;
 }
 
-.App-link {
-  color: #61dafb;
+.sidebarDiv.active {
+  left: 0;
+  transition: 350ms;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.toggleMenu a {
+  vertical-align: middle;
+  color: #ffffff;
+}
+
+.toggleMenu a:hover {
+  color: #218199;
+}
+
+.toggleMenu Button {
+  background-color: #ffffff !important;
+  color: #218199 !important;
+  border: none !important;
+}
+
+.toggleMenu Button:focus {
+  box-shadow: none !important;
+}
+
+.sidebar li {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #ffffff;
+}
+
+.sidebar {
+  margin-top: 4rem;
+  background-color: #218199;
+}
+
+.logout Button {
+  background-color: #ffffff !important;
+  color: #218199 !important;
+  border: none !important;
+}
+
+/*----------Content----------*/
+.content {
+  /* max-width: 600px;*/
+  width: 100%;
+  margin: 7rem 2.8rem 2.8rem 18rem;
+  padding: 20px;
+  transition: 350ms;
+
+}
+
+.contentActive {
+  width: 100%;
+  margin: 7rem 2.8rem 2.8rem 3rem;
+  padding: 20px;
+  transition: 350ms;
+}
+
+
+/*----------Kalender----------*/
+.calendar {
+  min-height: 100%;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+.calendar-sidebar {
+  line-height: 1.5;
+  background: #21819926;
+  padding: 1.5em;
+}
+
+.calendar-main {
+  flex-grow: 1;
+}
+
+.fc-header-toolbar button,
+.fc-footer-toolbar button {
+  background-color: #218199 !important;
+  border-color: none !important;
+  border: none !important;
+}
+
+.popup-icon {
+  color: #218199;
+}
+
+
+/*----------Termin----------*/
+
+.breadcrumbs{
+  background-color: #21819926;
+}
+
+.breadcrumb{
+  margin-bottom: 0 !important;
+}
+
+.terminvorschau .terminListenEintrag {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.terminvorschau .keys {
+  font-weight: bold;
+}
+
+.terminvorschau .rowKeyValue {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.btn-termin {
+  width: auto !important;
+}
+
+.termin-block{
+  margin-bottom: 1em;
+}
+
+.terminuebersicht-row {
+  border-bottom: 2px solid #8c9a9e9f;
+}
+
+.uebersicht-infos p {
+  margin-top: 1rem;
+}
+
+.vorschaubild {
+  width: 100%;
+}
+
+video{
+  max-width: 100%;
+}
+
+.option1{
+  background-color: #21819926;
+}
+
+.option2{
+  background-color: #21819926;
+}
+
+.plus-icon {
+  color: #218199;
+}
+
+.form-validation {
+  color: rgb(174, 0, 0);
+}
+
+.termindetails{
+  background-color: #f2f2f2;
+}
+
+.uebersicht-image{
+  background-color: #218199;
+}
+
+.uebersicht-infos{
+  background-color: #f2f2f2;
+}
+
+.uebersicht-btn{
+  background-color: #f2f2f2;
+}
+
+.kontakt-optionen{
+  background-color: #21819926;
+}
+
+.contacts-supported{
+  background-color: #2dce7b32;
+}
+
+.contacts-not-supported{
+  background-color: #ce2d3825;
+}
+
+.event-unsuccessful{
+  background-color: #ce2d3825;
+}
+
+/*----------Login----------*/
+.user-name {
+  font-weight: 600;
+}
+
+.login-link{
+  color: #218199 !important;
+  text-decoration: none !important;
+}
+
+
+/*----------iCal----------*/
+.iCal-Link{
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+
+/*MEDIA QUERIES*/
+
+@media only screen and (max-width: 1026px) {
+  .sidebar-cal {
+    display: none;
   }
-  to {
-    transform: rotate(360deg);
+
+  .contentActive {
+    margin: 7rem 0rem;
   }
 }
