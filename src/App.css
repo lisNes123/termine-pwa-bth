@@ -68,26 +68,17 @@ img {
   display: flex;
   flex-direction: column;
   padding: 0.75rem;
-  transition: 350ms;
+  transition: 3s ease;
 }
 
 .sidebarDiv.active {
   left: 0;
-  transition: 350ms;
-}
-
-.toggleMenu a {
-  vertical-align: middle;
-  color: #ffffff;
-}
-
-.toggleMenu a:hover {
-  color: #218199;
+  transition: 0.5s ease;
 }
 
 .toggleMenu Button {
-  background-color: #ffffff !important;
-  color: #218199 !important;
+  background-color: transparent !important;
+  color: #ffffff !important;
   border: none !important;
 }
 
@@ -118,7 +109,7 @@ img {
   width: 100%;
   margin: 7rem 2.8rem 2.8rem 18rem;
   padding: 20px;
-  transition: 350ms;
+  transition: 0.5s;
 
 }
 
@@ -126,7 +117,7 @@ img {
   width: 100%;
   margin: 7rem 2.8rem 2.8rem 3rem;
   padding: 20px;
-  transition: 350ms;
+  transition: 2s;
 }
 
 
@@ -271,6 +262,25 @@ video{
   color: #ffffff !important;
   text-decoration: none !important;
 }
+
+/*----------Offline----------*/
+.offline-bar {
+  padding: 0.8rem;
+  display: flex;
+  width: 100vw !important;
+  bottom: 0;
+  background-color: #cee7ed;
+  color: #218199;
+  position: fixed;
+  z-index: 1000;
+  border: 2px dashed rgb(78, 78, 78);
+  justify-content: center;
+}
+
+.offline-bar p{
+  font-size: smaller;
+}
+
 
 
 /*MEDIA QUERIES*/

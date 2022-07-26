@@ -14,7 +14,7 @@ import { Container, Row, Col, Form } from "react-bootstrap";
 
 
 
-class CalendarTest extends React.Component {
+class Calendar extends React.Component {
 
     state = {
 
@@ -210,4 +210,4 @@ class CalendarTest extends React.Component {
 
 }
 
-export default withRouterHOC(CalendarTest);
+export default withRouterHOC(Calendar);

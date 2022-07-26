@@ -127,9 +127,9 @@ const GetMedia = ({ passBlobImage }) => {
                 {visible &&
                     <Row>
                         <Col sm={12} className="d-flex flex-nowrap">
-                            <Button className="btn1 btn-sm me-3" ref={btnRef} onClick={openCamera}>1. Open Camera</Button>
-                            <Button className="btn1 btn-sm me-3" ref={btn2Ref} onClick={takePhoto}>2. Take Photo</Button>
-                            <Button className="btn1 btn-sm" ref={btn3Ref} onClick={usePhoto}>3. Use Photo</Button>
+                            <Button className="btn1 btn-sm me-3" ref={btnRef} onClick={openCamera}>1. Kamera öffnen</Button>
+                            <Button className="btn1 btn-sm me-3" ref={btn2Ref} onClick={takePhoto}>2. Foto aufnehmen</Button>
+                            <Button className="btn1 btn-sm" ref={btn3Ref} onClick={usePhoto}>3. Foto verwenden</Button>
                         </Col>
                         <Col sm={2}></Col>
                         <Col sm={8} ref={mediaRef}>

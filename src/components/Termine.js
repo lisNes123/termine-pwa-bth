@@ -31,7 +31,6 @@ const Termine = () => {
 
     const [dateStart, setDateStart] = useState(selectedDateStart ?? ""); //angeklicktes Datum im Kalender wird hier übernommen
     const [dateEnd, setDateEnd] = useState(selectedDateStart ?? "");
-    const [freigabe, setFreigabe] = useState(false);
 
     const [contacts, setContacts] = useState([]);
 
@@ -46,13 +45,7 @@ const Termine = () => {
     };
 
 
-
-    const toggleFreigabe = () => {
-        setFreigabe(!freigabe);
-    };
-
     console.log(dateEnd);
-    console.log("Freigabe: ", freigabe);
 
     //Speichern der übergebenen Input-Values aus Formular "Basisdaten" in neuen Konstanten
     const title = location.state.title;
@@ -66,8 +59,6 @@ const Termine = () => {
     const interneInfos = location.state.interneInfos;
     const imageBlob = location.state.blobImage;
     const imageFile = location.state.fileImage;
-    //const image = location.state.fileUrl;
-    //const blobImage = location.state.blobImage;
 
     console.log("BLOB", imageBlob);
     console.log("FILE", imageFile);
@@ -76,7 +67,7 @@ const Termine = () => {
 
     console.log("IMAGE URL ENDE ", image); //richtig
 
-
+    const [visible, setVisible] = useState(false);
 
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -91,6 +82,7 @@ const Termine = () => {
         if (imageFile === "") {
             setImage(imageBlob)
         }
+        setVisible(!visible);
     }
 
 
@@ -113,7 +105,6 @@ const Termine = () => {
                 beschreibung: beschreibung,
                 interneInfos: interneInfos,
 
-                freigabe: freigabe,
                 startDatum: dateStart,
                 endeDatum: dateEnd,
                 vorschaubild: image,
@@ -213,32 +204,22 @@ const Termine = () => {
                             </Row>
 
 
-                            <Row className="mt-4">
+                            <Row className="mt-4 mb-3">
 
                                 <Form.Label><b>Kontaktpersonen hinzufügen</b></Form.Label>
                                 <ContaktPicker passContacts={passContacts} />
 
                             </Row>
 
-                            <Form.Group className="mb-3">
-                                <Form.Check
-                                    type="switch"
-                                    label="Freigabe"
-                                    id="custom-switch"
-                                    onChange={toggleFreigabe}
-                                    checked={freigabe}
-
-                                >
-                                </Form.Check>
-                            </Form.Group>
 
                             <div className='mb-3'>{errorMsg}</div>
 
-                            {/* <Button className='btn-light me-3' type='button' onClick={backToBasisdaten}>Zurück</Button> */}
-
                             <div className='d-flex flex-nowrap mt-2'>
                                 <Button className='btn1 me-3' type='button' onClick={addImage}>1. Termindaten speichern</Button>
-                                <Button className='btn1' type='button' onClick={routeToTerminvorschau}>2. Termin erstellen</Button>
+
+                                {visible &&
+                                    <Button className='btn1' type='button' onClick={routeToTerminvorschau}>2. Termin erstellen</Button>
+                                }
                             </div>
 
                         </Form>

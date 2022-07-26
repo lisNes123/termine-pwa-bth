@@ -8,7 +8,7 @@ const LoggedOut = () => {
         <div className="home">
 
             <div className='d-flex flex-column justify-content-center'>
-                <h3>Sie haben sich erfolgreich abgemeldet!</h3>
+                <h3>Du hast dich erfolgreich abgemeldet!</h3>
             <Link to="/login" className='login-link'>zum Login</Link>
             </div>
         </div>

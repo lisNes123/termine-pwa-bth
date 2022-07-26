@@ -3,7 +3,7 @@
 import Basisdaten from './Basisdaten';
 import Termine from './Termine';
 import TerminPlus from './TerminPlus';
-import CalendarTest from './Kalender';
+import Calendar from './Kalender';
 import Terminvorschau from './Terminvorschau';
 import Terminuebersicht from './Terminuebersicht';
 import Login from './Login';
@@ -45,16 +45,15 @@ const Content = () => {
             <Routes>
                 {/* Routes für jede Unterseite definieren */}
 
-                <Route exact path="/" element={<PrivateRoute><TerminPlus /></PrivateRoute>} />
                 <Route exact path="/" element={<TerminPlus />} />
-                <Route path="/termin/basisdaten" element={<Basisdaten />} />
-                <Route path="/termin/terminvorschau" element={<Terminvorschau />} />
-                <Route path="/termin/termine" element={<Termine />} />
-                <Route path='/terminuebersicht' element={<Terminuebersicht />} />
-                <Route path='/termindetails' element={<TerminDetail />} />
-                <Route path="/kalender" element={<DisplayDataInCalendar />} />
-                <Route path="/kalenderansicht" element={<CalendarTest />} />
-                <Route path="/terminuebersicht/detailseite" element={<TerminDetail />} />
+                <Route path="/termin/basisdaten" element={<PrivateRoute><Basisdaten /></PrivateRoute>} />
+                <Route path="/termin/terminvorschau" element={<PrivateRoute><Terminvorschau /></PrivateRoute>} />
+                <Route path="/termin/termine" element={<PrivateRoute><Termine /></PrivateRoute>} />
+                <Route path='/terminuebersicht' element={<PrivateRoute><Terminuebersicht /></PrivateRoute>} />
+                <Route path='/termindetails' element={<PrivateRoute><TerminDetail /></PrivateRoute>} />
+                <Route path="/kalender" element={<PrivateRoute><DisplayDataInCalendar /></PrivateRoute>} />
+                <Route path="/kalenderansicht" element={<PrivateRoute><Calendar /></PrivateRoute>} />
+                <Route path="/terminuebersicht/detailseite" element={<PrivateRoute><TerminDetail /></PrivateRoute>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/logoutsuccess" element={<LoggedOut />} />

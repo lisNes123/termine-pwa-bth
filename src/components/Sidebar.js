@@ -15,6 +15,7 @@ import { faX } from '@fortawesome/free-solid-svg-icons';
 
 //Context für Sidebar-Funktion einbinden
 import { useSidebar, useSidebarUpdate } from '../context/SidebarContext';
+import OfflineStatus from './OfflineMsg';
 
 const Sidebar = () => {
 
@@ -65,6 +66,7 @@ const Sidebar = () => {
                     <Link to="/" className="text-decoration-none"><img src='./icons/192x192.png' alt='logo' width="40em"></img></Link>
                 </div>
             </div>
+                         
 
 
             <div className={sidebar ? 'sidebarDiv active' : 'sidebarDiv'}>
@@ -79,9 +81,9 @@ const Sidebar = () => {
                         </>
                     ) : (
                         <>
-                            <li><NavLink to="/" className={(navData) => (navData.isActive ? 'activeLink' : 'link')}><FontAwesomeIcon className='sidebar-icon me-2' icon={faCirclePlus} />Neuer Termin</NavLink></li>
-                            <li><NavLink to="/kalender" className={(navData) => (navData.isActive ? 'activeLink' : 'link')}><FontAwesomeIcon className='sidebar-icon me-2' icon={faCalendarDays} />Kalender</NavLink></li>
-                            <li><NavLink to="/terminuebersicht" className={(navData) => (navData.isActive ? 'activeLink' : 'link')}><FontAwesomeIcon className='sidebar-icon me-2' icon={faTableList} />Terminübersicht</NavLink></li>
+                            <li><NavLink to="/" className={(navData) => (navData.isActive ? 'activeLink' : 'link')} onClick={openSidebar}><FontAwesomeIcon className='sidebar-icon me-2' icon={faCirclePlus} />Neuer Termin</NavLink></li>
+                            <li><NavLink to="/kalender" className={(navData) => (navData.isActive ? 'activeLink' : 'link')} onClick={openSidebar}><FontAwesomeIcon className='sidebar-icon me-2' icon={faCalendarDays} />Kalender</NavLink></li>
+                            <li><NavLink to="/terminuebersicht" className={(navData) => (navData.isActive ? 'activeLink' : 'link')} onClick={openSidebar}><FontAwesomeIcon className='sidebar-icon me-2' icon={faTableList} />Terminübersicht</NavLink></li>
 
                             <div className='mt-4'>
                                 <div>{auth.user?.name}</div>
@@ -108,6 +110,9 @@ const Sidebar = () => {
                 </ul>
 
             </div>
+
+            
+            <OfflineStatus />
 
         </>
     );

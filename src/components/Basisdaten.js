@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { firebaseApp } from '../firebase/config';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import GetMedia from './GetMediaTest';
+import GetMedia from './GetMedia';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -163,8 +163,12 @@ const Basisdaten = () => {
                                         setCategory(selectedCategory);  //https://www.youtube.com/watch?v=TahbDflPa8E
                                     }}
                                 >
+                                    <option value="-">-</option>
+                                   <option value="Veranstaltungen">Veranstaltungen</option>
+                                   <option value="Feste und Feiern">Feste und Feiern</option>
+                                   <option value="Workshops">Workshops</option>
                                     <option value="Gottesdienste">Gottesdienste</option>
-                                    <option value="Veranstaltungen">Veranstaltungen</option>
+                                    
                                 </Form.Select>
                             </Form.Group>
 
@@ -177,8 +181,10 @@ const Basisdaten = () => {
                                         setVeranstalter(selectedVeranstalter);
                                     }}
                                 >
-                                    <option value="Kirchengemeinde">Kirchengemeinde</option>
+                                    <option value="-">-</option>
                                     <option value="Stadt Offenburg">Stadt Offenburg</option>
+                                    <option value="Kirchengemeinde">Kirchengemeinde</option>
+                                    
                                 </Form.Select>
                             </Form.Group>
 
@@ -193,8 +199,10 @@ const Basisdaten = () => {
                                                 setOrt(selectedOrt);
                                             }}
                                         >
+                                            <option value="-">-</option>
                                             <option value="Bildungszentrum">Bildungszentrum</option>
                                             <option value="Kindergarten">Kindergarten</option>
+                                            <option value="Gemeindehaus Offenburg">Gemeindehaus Offenburg</option>
                                             <option value="Musterkirche Offenburg">Musterkirche Offenburg</option>
                                         </Form.Select>
                                     </Form.Group>

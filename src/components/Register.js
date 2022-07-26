@@ -11,16 +11,13 @@ import { useAuth } from "../context/AuthContext";
 function Register() {
     const [emailValue, setEmailValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");
-    const [nameValue, setNameValue] = useState("");
     const navigate = useNavigate();
 
     const auth = useAuth();
 
     //State-Hooks zur Form-Validation
-    const [checkName, setCheckName] = useState("");
     const [checkEmail, setCheckEmail] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
-    const nameInput = useRef(null);
     const emailInput = useRef(null);
     const passwordInput = useRef(null);
     
@@ -30,25 +27,18 @@ function Register() {
     //Funktion zur Überprüfung der Eingaben im Formular (Emailformat und Passwortlänge)
     const checkValue = () => {
         
-        if(nameValue === ""){
-            setCheckEmail("");
+      
+        if (emailValue === "" || !emailRegex.test(emailValue)) {
             setCheckPassword("");
-            setCheckName("Gib einen Namen ein");
-            nameInput.current.focus();
-        } else if (emailValue === "" || !emailRegex.test(emailValue)) {
-            setCheckPassword("");
-            setCheckName("");
             setCheckEmail("Gib eine gültige E-Mail-Adresse ein");
             emailInput.current.focus();
         } else if (passwordValue === "" || (passwordValue.length < 5)) {
-            setCheckName("");
             setCheckEmail("");
             setCheckPassword("Gib ein Passwort mit mindestens 6 Zeichen ein");
             passwordInput.current.focus();
         } else {
             setCheckPassword("");
-            auth.signup({name: nameValue, email: emailValue, password: passwordValue, callback: () => navigate("/") });
-                            setNameValue("");
+            auth.signup({email: emailValue, password: passwordValue, callback: () => navigate("/login") });
                             setEmailValue("");
                             setPasswordValue("");
         }
@@ -64,16 +54,6 @@ function Register() {
                             e.preventDefault();
                             checkValue();
                         }}>
-                            <Form.Group className="mb-3">
-                                <Form.Control
-                                    ref={nameInput}
-                                    type="text"
-                                    className="register__textBox"
-                                    value={nameValue}
-                                    onChange={(e) => setNameValue(e.target.value)}
-                                    placeholder="Name">
-                                </Form.Control>
-                            </Form.Group>
 
                             <Form.Group className="mb-3">
                                 <Form.Control
@@ -99,7 +79,6 @@ function Register() {
                             
                             {/* Ausgabe von Error-Messages bei Validation */}
                             <p className="form-validation">
-                            { checkName } 
                             { checkEmail }
                             { checkPassword }
                             </p>

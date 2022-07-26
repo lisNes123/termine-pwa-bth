@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { enableIndexedDbPersistence } from "firebase/firestore"; 
 
 //TERMIN
 
@@ -18,35 +19,23 @@ const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
-//Push Notifications
-// const messaging = getMessaging(firebaseApp);
 
-// const { REACT_APP_VAPID_KEY } = process.env 
-// const publicKey = REACT_APP_VAPID_KEY;
 
-// export const getToken = async (setTokenFound) => {
-//   let currentToken = '';
+enableIndexedDbPersistence(db)
+  .catch((err) => {
+      if (err.code === 'failed-precondition') {
+          // Multiple tabs open, persistence can only be enabled
+          // in one tab at a a time.
+          // ...
+      } else if (err.code === 'unimplemented') {
+          // The current browser does not support all of the
+          // features required to enable persistence
+          // ...
+      }
+  });
+// Subsequent queries will use persistence, if it was enabled successfully
 
-//   try{
-//     currentToken = await getToken(messaging, { vapidKey: publicKey });
-//     if (currentToken) {
-//       setTokenFound(true);
-//     } else {
-//       setTokenFound(false);
-//     }
-//   } catch (error) {
-//     console.log('An error occured while retrieving token', error);
-//   }
 
-//   return currentToken;
-// };
-
-// export const onMessageListener = () => 
-//   new Promise((resolve) => {
-//     onMessage(messaging, (payload) => {
-//       resolve(payload);
-//     });
-//   });
 
 export { 
   firebaseApp, 

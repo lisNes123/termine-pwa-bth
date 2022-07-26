@@ -19,7 +19,7 @@ const Terminuebersicht = () => {
             const getPostsFromFirebase = [];
 
             const docRef = collection(db, "termine");
-            const q = query(docRef, orderBy("createdAt", "desc"));
+            const q = query(docRef, orderBy("startDatum", "asc"));
             const querySnapshot = await getDocs(q);
 
 
@@ -63,6 +63,8 @@ const Terminuebersicht = () => {
 
             <h2 className="mb-4">Terminübersicht</h2>
 
+            <h6>Termine sind nach Startdatum geordnet</h6>
+
             {posts.length > 0 ? (
                 posts.map((post) =>
                     <div key={post.key}>
@@ -76,7 +78,7 @@ const Terminuebersicht = () => {
                                     </Col>
                                     <Col sm={12} md={6} lg={6} xl={6} className="uebersicht uebersicht-infos d-flex align-items-center">
                                         <Container>
-                                            <Row className="terminuebersicht-row"><p>{post.dateStart} Uhr - {post.dateEnd} Uhr</p></Row>
+                                            <Row className="terminuebersicht-row"><p><b>{post.dateStart} Uhr - {post.dateEnd} Uhr</b></p></Row>
                                             <Row className="terminuebersicht-row"><p>{post.kategorie}</p></Row>
                                             <Row className="terminuebersicht-row"><p>{post.anreisser}</p></Row>
                                             <Row><p>{post.ort}</p></Row>
