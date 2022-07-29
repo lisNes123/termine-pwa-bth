@@ -2,11 +2,6 @@
 
 PWA unter https://termine-pwa.herokuapp.com/ erreichbar.
 
-PWA lokal starten:
-
-cd server
-nodemon index.js 
-
 Zugriff auf Terminverwaltung nach Öffnen: 
 
 - eigener Account anlegen 
