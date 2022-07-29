@@ -1,9 +1,9 @@
+//Datenbank Firestore und Storage konfigurieren
+
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { enableIndexedDbPersistence } from "firebase/firestore"; 
-
-//TERMIN
 
 const firebaseConfig = {
   apiKey: "AIzaSyA11X4wcwbJGb--Sc6mMGylBTtwEZmJBx0",
@@ -20,7 +20,7 @@ const db = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
 
-
+//macht Firestore-Daten auch offline zugreifbar
 enableIndexedDbPersistence(db)
   .catch((err) => {
       if (err.code === 'failed-precondition') {

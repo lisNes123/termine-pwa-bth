@@ -1,9 +1,8 @@
-/*PopUp-Fenster: erscheint, wenn Termin bei vergangenem Datum eingetragen werden will*/
+/*Component zum Aufnehmen eines Fotos mit MediaCapture direkt in der Anwendung*/
 
 import React, { useRef, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-
 
 const GetMedia = ({ passBlobImage }) => {
 
@@ -18,15 +17,9 @@ const GetMedia = ({ passBlobImage }) => {
 
     const [blobFileURL, setBlobFileURL] = useState("");
 
-
-    const [blobImg, setBlobImg] = useState({});
-
     passBlobImage(blobFileURL);
 
     var blobIMG;
-
-    console.log("storage", blobFileURL)
-    console.log("blob img", blobImg)
 
     const [visible, setVisible] = useState(false);
     const [noSupportMsg, setNoSupportMsg] = useState("");
@@ -35,12 +28,12 @@ const GetMedia = ({ passBlobImage }) => {
     const nosupport = <p>Diese Option funktioniert auf diesem Gerät nicht - keine Videoinput Devices verfügbar!</p>
     const errorMsg = <p>Diese Funktion wird vom Gerät nicht unterstützt...</p>
 
+    //Schaut, welche Input- und Output-Devices auf dem Gerät verfügbar sind und filtert die Kameras heraus
     const getConnectedDevices = (type, callback) => {
 
         navigator.mediaDevices.enumerateDevices()
             .then(devices => {
                 const filtered = devices.filter(device => device.kind === type);
-                console.log(filtered);
                 callback(filtered);
                 if (filtered.length !== 0) {
                     setVisible(!visible);
@@ -52,10 +45,8 @@ const GetMedia = ({ passBlobImage }) => {
 
     }
 
+    //Ist Kamera verfügbar, wird MediaStream innerhalb der Anwendung angezeigt
     const openCamera = async () => {
-
-        // const mediaSupported = navigator.mediaDevices.getSupportedConstraints();
-        // console.log("supported", mediaSupported);
 
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
@@ -69,46 +60,40 @@ const GetMedia = ({ passBlobImage }) => {
             btnRef.current.setAttribute('hidden', true)
             imageCapture = new ImageCapture(stream.getVideoTracks()[0])
 
-
-        } catch (error) {
-            // alert(`${error.name}`)
-            console.error(error)
+        } catch (error) {     
             setErrorText(errorMsg);
-
         }
 
     };
 
 
+    //Foto kann aus dem Videostream aufgenommen werden, mehrmals geklickt werden 
     const takePhoto = () => {
 
         imageCapture.takePhoto().then(function (blob) {
-            console.log('Took photo:', blob);
-
+            
             imgRef.current.src = URL.createObjectURL(blob);
-
             blobIMG = blob;
 
         }).catch(function (error) {
             console.log('takePhoto() error: ', error);
+            setErrorText(errorMsg);
         });
 
     }
 
 
-
+    //wurde Aufnahme gemacht, kann Foto hinzugefügt werden 
     const usePhoto = async () => {
         videoRef.current.setAttribute('hidden', true)
         btnRef.current.setAttribute('hidden', true)
         btn2Ref.current.setAttribute('hidden', true)
         btn3Ref.current.setAttribute('hidden', true)
 
-        const rand = Math.random().toString(16).substr(2, 8); // generate random string which will be used as blob reference
+        const rand = Math.random().toString(16).substr(2, 8); //Zufälliger String wird generiert, der dann als Referenz für Image benutzt wird
 
         const storage = getStorage();
         const storageRef = ref(storage, rand);
-
-        setBlobImg(blobIMG);
 
         await uploadBytes(storageRef, blobIMG).then((snapshot) => {
             console.log('Uploaded a blob or file!');
@@ -139,16 +124,13 @@ const GetMedia = ({ passBlobImage }) => {
                         </Col>
                         <Col sm={2}></Col>
 
-
                     </Row>
                 }
 
             </Container>
         </div>
 
-
     );
-
 }
 
 export default GetMedia; 

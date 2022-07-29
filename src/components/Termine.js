@@ -4,8 +4,6 @@ import React from 'react';
 import { Container, Row, Col, Button, Form, Breadcrumb } from "react-bootstrap";
 import { useState } from "react";
 import { useLocation } from 'react-router-dom';
-
-
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase/config';
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
@@ -14,20 +12,12 @@ import DateTimePicker from 'react-datetime-picker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
-
-
-
 const Termine = () => {
 
     const location = useLocation();
     const navigate = useNavigate();
 
-
-
-
     const selectedDateStart = new Date(location.state.selectedDate);
-
-    console.log("Date in Termine:", selectedDateStart);
 
     const [dateStart, setDateStart] = useState(selectedDateStart ?? ""); //angeklicktes Datum im Kalender wird hier übernommen
     const [dateEnd, setDateEnd] = useState(selectedDateStart ?? "");
@@ -35,17 +25,10 @@ const Termine = () => {
     const [contacts, setContacts] = useState([]);
 
 
-    //test
+    //Ausgewählte Kontakte aus Telefonbuch (ContactPicker Component) werden an diesen Termine-Component übergeben
     const passContacts = (contactData) => {
-
-        console.log("contactDataNEU", contactData)
-
         setContacts(contactData);
-        console.log("Contacts", contacts)
     };
-
-
-    console.log(dateEnd);
 
     //Speichern der übergebenen Input-Values aus Formular "Basisdaten" in neuen Konstanten
     const title = location.state.title;
@@ -60,20 +43,13 @@ const Termine = () => {
     const imageBlob = location.state.blobImage;
     const imageFile = location.state.fileImage;
 
-    console.log("BLOB", imageBlob);
-    console.log("FILE", imageFile);
-
     const [image, setImage] = useState("");
-
-    console.log("IMAGE URL ENDE ", image); //richtig
 
     const [visible, setVisible] = useState(false);
 
     const [errorMsg, setErrorMsg] = useState("");
 
     const errorText = <div className='event-unsuccessful p-2'><FontAwesomeIcon size='lg' icon={faTriangleExclamation} /> <p>Beim Erstellen des Termins ist ein Fehler aufgetreten</p></div>;
-
-    //Nach Klick auf "erstellen" Button wird gerade hinzugefügter Termin angezeigt
 
     const addImage = () => {
         if (imageBlob === "") {
@@ -85,15 +61,12 @@ const Termine = () => {
         setVisible(!visible);
     }
 
-
+    //Nach Klick auf "erstellen" Button wird gerade hinzugefügter Termin angezeigt
     const routeToTerminvorschau = async () => {
-
-        await addImage(); //-> geht leider nicht 
-
 
         //Termindaten in Datenbank firestore speichern
         try {
-            const docRef = await addDoc(collection(db, "termine"), {
+            await addDoc(collection(db, "termine"), {
                 // id: doc.id,
                 titel: title,
                 untertitel: subtitle,
@@ -114,11 +87,9 @@ const Termine = () => {
 
 
             });
-            console.log("Document ID: ", docRef.id);
 
             let path = '/termin/terminvorschau';
             navigate(path);
-            console.log("ContactsArrayTermine", contacts);
 
             Notification.requestPermission((permission) => {
                 navigator.serviceWorker.ready.then(() => {
@@ -132,35 +103,23 @@ const Termine = () => {
 
         } catch (error) {
             console.error("Error adding document: ", error);
-
             setErrorMsg(errorText);
-
         }
 
     }
 
-    console.log(image); //passt
-
-
+    //wird zurück auf Formular 1 Basisdaten navigiert, dann werden bereits vorher eingetragene Daten wieder in Formularfelder übernommen
     const backToBasisdaten = () => {
-
         let path = '/termin/basisdaten';
         navigate(path, { state: { title, subtitle, category, veranstalter, ort, ortsbeschreibung, anreisser, beschreibung, interneInfos, image } });
-
     }
-
-
 
     return (
         <div className="home">
 
             <h2>Termin anlegen</h2>
 
-
-
-
             <Container>
-
                 <Row>
                     <Col sm={12} md={12} lg={5} xl={5} >
 
@@ -174,7 +133,6 @@ const Termine = () => {
                         </div>
 
                         <Form>
-
                             <Row className="mb-3">
                                 <Form.Label>Beginnt am</Form.Label>
                                 <Form.Group as={Col}>
@@ -198,19 +156,14 @@ const Termine = () => {
                                         value={dateEnd}
                                         minDate={new Date()}
                                         onChange={date => setDateEnd(date)}
-
                                     />
                                 </Form.Group>
                             </Row>
 
-
                             <Row className="mt-4 mb-3">
-
                                 <Form.Label><b>Kontaktpersonen hinzufügen</b></Form.Label>
                                 <ContaktPicker passContacts={passContacts} />
-
                             </Row>
-
 
                             <div className='mb-3'>{errorMsg}</div>
 

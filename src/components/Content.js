@@ -12,12 +12,11 @@ import Register from './Register';
 import LoggedOut from './LoggedOut';
 import DisplayDataInCalendar from './DisplayDataInCalendar';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
-import { Route, Routes } from 'react-router-dom'; //ohne Router funktioniert es nicht
+import { Route, Routes } from 'react-router-dom';
+import PopUpDelete from './PopUpDelete';
 
 //Context für Sidebar-Funktion einbinden
 import { useSidebar } from '../context/SidebarContext';
-import PopUpDelete from './PopUpDelete';
-
 
 
 const Content = () => {
@@ -32,12 +31,7 @@ const Content = () => {
         if (sidebar) {
             contentClass = 'content';
         }
-        console.log(contentClass);
-
-
-    console.log("Sidebar App: ", sidebar);
     
-
     return (
 
         <div className={contentClass}>
@@ -59,7 +53,6 @@ const Content = () => {
                 <Route path="/logoutsuccess" element={<LoggedOut />} />
                 <Route path="/termin-loeschen" element={<PopUpDelete />} />
 
-                {/* Add Route Router last -> https://www.google.com/search?q=react+pwa+routing&oq=react+pwa+routes&aqs=chrome.1.69i57j0i22i30j0i390l4.5936j0j7&sourceid=chrome&ie=UTF-8#kpvalbx=_PRtqYvexJqr-7_UPmP6juAQ14 */}
             </Routes>
 
         </div>

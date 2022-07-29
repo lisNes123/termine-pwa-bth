@@ -1,7 +1,8 @@
+/*Zugriff auf das Telefonbuch für das Hinzufügen von Kontakten als Ansprechpartner zum Termin*/
+
 import React from 'react';
 import { Button, Form } from "react-bootstrap";
 import { useState, useRef } from "react";
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
@@ -9,11 +10,7 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
 const ContaktPicker = ({ passContacts }) => {
 
-
     const [dataContacts, setDataContacts] = useState([]);
-
-    //console.log("cNamein fun",nameDB);
-    console.log("dataContactsOBEN-NEU:", dataContacts);
     passContacts(dataContacts);
 
     const [multiple, setMultiple] = useState(false);
@@ -52,7 +49,7 @@ const ContaktPicker = ({ passContacts }) => {
     const ulResults = useRef(null);
     const preResults = useRef(null);
 
-
+    //Überprüfen welche Eigenschaften zum Kontakt unterstützt werden
     const checkProperties = async () => {
         const supportedProperties = await navigator.contacts.getProperties();
         if (supportedProperties.includes('name')) {
@@ -67,12 +64,11 @@ const ContaktPicker = ({ passContacts }) => {
 
     }
 
-
+    //Switches aktivieren, wenn Eigenschaften unterstützt werden
     const enableProp = (cbox) => {
         cbox.current.removeAttribute('disabled');
-        //cbox.current.setAttribute('checked', 'checked');
 
-        if (cbName){
+        if (cbName) {
             setName(!name);
         }
     }
@@ -82,9 +78,7 @@ const ContaktPicker = ({ passContacts }) => {
     const contactsNotSupported = <div className='contacts-not-supported p-2'><FontAwesomeIcon size='lg' icon={faTriangleExclamation} /> <p>Das Hinzufügen von Kontakten aus dem lokalen Telefonbuch wird von diesem Endgerät/Browser <b>NICHT</b> unterstützt.</p></div>;
     const contactsSupported = <div className='contacts-supported p-2'><FontAwesomeIcon size='lg' icon={faCircleCheck} /> <p>Das Hinzufügen von Kontakten aus dem lokalen Telefonbuch wird von diesem Endgerät/Browser unterstützt. Wähle unterhalb welche Kontaktinformationen hinzugefügt werden sollen. </p></div>;
 
-
-    //check if supported, if yes then disable the checkboxes and set to checked 
-
+    //Überprüfen ob Zugriff auf Telefon von Gerät/Browser unterstützt wird.
     const checkContacts = () => {
         const supported = ('contacts' in navigator && 'ContactsManager' in window);
 
@@ -99,7 +93,6 @@ const ContaktPicker = ({ passContacts }) => {
     }
 
 
-
     const requestContacts = async () => {
 
         const props = [];
@@ -108,18 +101,10 @@ const ContaktPicker = ({ passContacts }) => {
         if (cbTel.current.checked) props.push('tel');
 
         const opts = { multiple: cbMultiple.current.checked };
-        console.log("Props", props);
-
-
 
         try {
             const contacts = await navigator.contacts.select(props, opts);
             handleResults(contacts);
-
-
-            //setDataContacts(contactData)
-            //console.log("DataContacts zum passen",dataContacts); //passt schon  nicht
-            //passContacts(dataContacts);
 
         } catch (ex) {
             ulResults.current.classList.toggle('error', true);
@@ -136,17 +121,13 @@ const ContaktPicker = ({ passContacts }) => {
         ulResults.current.classList.toggle('error', false);
         ulResults.current.innerHTML = '';
         renderResults(contacts);
-        //console.log(returnedContactdata);
-
-        //return returnedContactdata;
-
     }
 
+    //Ausgewählte Kontakte ausgeben und in Konstante speichern, damit Kontakte an das Termine-Formular übergeben werden können
     function renderResults(contacts) {
 
-
         contacts.forEach((contact) => {
-            //lines muss hier bleiben
+
             const lines = [];
 
             if (contact.name) lines.push(`<b>Name:</b> ${contact.name.join(', ')}`);
@@ -158,130 +139,40 @@ const ContaktPicker = ({ passContacts }) => {
             li.innerHTML = lines.join('<br>');
             ulResults.current.appendChild(li);
 
-            console.log("contact.email", contact.email);
-
-            //const cName = contact.name; //ist schon ein Array, mit einem eintrag "name"
-            //const cEmail = contact.email;
-            //const cTel = contact.tel;
-
-
             const contactNameArray = contact.name;
-            console.log("nameArray", contactNameArray);
             if (contactNameArray) {
                 contactNameArray.forEach((contactName) => {
                     if (contactName) {
                         const cNameStelleNull = contactName;
-                        setDataContacts(state => [...state, cNameStelleNull]); //geht so 
-                        console.log("cnameStelleNull", cNameStelleNull);
+                        setDataContacts(state => [...state, cNameStelleNull]);
                     }
                 }
                 );
             }
 
-
-
             const contactEmailArray = contact.email;
-            console.log("emailArray", contactEmailArray);
             if (contactEmailArray) {
                 contactEmailArray.forEach((contactEmail) => {
                     if (contactEmail) {
                         const cEmailStelleNull = contactEmail;
                         setDataContacts(state => [...state, cEmailStelleNull]);
-                        console.log("cmail", cEmailStelleNull);
                     }
                 }
                 );
             }
 
-
-
             const contactTelArray = contact.tel;
-            console.log("telArray", contactTelArray);
             if (contactTelArray) {
                 contactTelArray.forEach((contactTel) => {
                     if (contactTel) {
                         const cTelStelleNull = contactTel;
                         setDataContacts(state => [...state, cTelStelleNull]);
-                        console.log("ctel", cTelStelleNull);
                     }
                 }
                 );
             }
 
-
-
-            // if (contact.name[0]) {
-            //     const cNameStelleNull = contact.name[0];
-            //     setDataContacts(state => [...state, cNameStelleNull]); //geht so 
-            //     console.log("cnameStelleNull", cNameStelleNull);
-            // }
-
-            // if (contact.email) {
-            //     const cEmailStelleNull = contact.email[0];
-            //     setDataContacts(state => [...state, cEmailStelleNull]);
-            //     console.log("cmail", cEmailStelleNull);
-            // }
-
-            // if (contact.tel) {
-            //     const cTelStelleNull = contact.tel[0];
-            //     setDataContacts(state => [...state, cTelStelleNull]);
-            //     console.log("ctel", cTelStelleNull);
-            // }
-
-            // //JEweils noch array durchlaufen lassen pro eigenschaft um zu gucken ob auf [1] oder [2] auch was steht
-            // if (contact.name){
-            //     const nameArray = [];
-            //     contact.name.length > 0 ? ( contact.name.map(prop =>
-            //         nameArray.push(prop)
-            //     )): console.log("no name");
-
-            //     setDataContacts(state => [...state, nameArray]); //geht so 
-            //     console.log("cnameStelleNull",nameArray);
-            // }
-
-            // //diese Variante funktioniert nicht, da firebase keine nested Arrays unterstützt 
-            // //es können daher keine zwei Tels genommen werden, nur die erste wird gespeichert 
-
-            // if (contact.email){
-            //     const emailArray = [];
-            //     contact.email.length > 0 ? ( contact.email.map(prop =>
-            //         emailArray.push(prop)
-            //     )): console.log("no email");
-
-            //     setDataContacts(state => [...state, emailArray]); //geht so 
-            //     console.log("cemailStelleNull",emailArray);
-            // }
-
-
-
-            // if (contact.tel){
-            //     const telArray = [];
-            //     contact.tel.length > 0 ? ( contact.tel.map(prop =>
-            //         telArray.push(prop)
-            //     )): console.log("no tel");
-
-            //     setDataContacts(state => [...state, telArray]); //geht so 
-            //     console.log("ctelStelleNull",telArray);
-            // }
-
-
-
-            //console.log("contactArray",dataContactArray);
-
-
-            //setDataContacts(dataContactArray);
-            //console.log("dataContactsNeu:",dataContacts);
-
         });
-        const strContacts = JSON.stringify(contacts, null, 2);
-        console.log(strContacts);
-        //console.log("Lines", lines);
-
-        //test
-        //setDataContacts(strContacts);
-
-        //return lines;
-
     }
 
     return (
@@ -292,7 +183,6 @@ const ContaktPicker = ({ passContacts }) => {
                 <Button ref={contactsAvailable} className='btn1 me-3' type='button' onClick={checkContacts}>Zugriff prüfen</Button>
 
                 <div className='mt-3'>{text}</div>
-
 
                 <div className='kontakt-optionen p-2 mt-3'>
                     <Form.Group className="mb-3">
@@ -356,20 +246,12 @@ const ContaktPicker = ({ passContacts }) => {
 
                 </div>
 
-
-
-
             </Form>
-
 
             <ul id="results" ref={ulResults}>
             </ul>
             <pre id="rawResults" ref={preResults}>
             </pre>
-
-
-
-
 
         </div>
     );

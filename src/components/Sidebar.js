@@ -25,8 +25,6 @@ const Sidebar = () => {
     const sidebar = useSidebar()
     const openSidebar = useSidebarUpdate()
 
-    console.log("Sidebar: ", sidebar);
-
     var menuIcon = null;
 
     //Toggle Sidebar Icon, wenn geöffnet bzw. geschlossen
@@ -35,19 +33,6 @@ const Sidebar = () => {
     } else {
         menuIcon = <FontAwesomeIcon className='sidebar-icon' icon={faX} size="lg" onClick={openSidebar} />
     }
-
-    //Button-Funktion für Notification Test React Cookbook
-    // const startTask = () => {
-    //     Notification.requestPermission((permission) => {
-    //         navigator.serviceWorker.ready.then(() => {
-    //             const notifyMe = permission === 'granted'
-    //             navigator.serviceWorker.controller.postMessage({
-    //                 type: 'DO_SLOW_THING',
-    //                 notifyMe,
-    //             })
-    //         })
-    //     })
-    // }
 
     return (
 
@@ -67,12 +52,9 @@ const Sidebar = () => {
                 </div>
             </div>
                          
-
-
             <div className={sidebar ? 'sidebarDiv active' : 'sidebarDiv'}>
 
                 <ul className="sidebar nav nav-pills flex-column">
-                    {/* https://dev.to/gabrlcj/react-router-v6-some-of-the-new-changes-181m */}
 
                     {/* Überprüfen, ob User eingeloggt, wenn ja dann Navigationspunkte anzeigen */}
                     {!auth.user ? (
@@ -94,24 +76,12 @@ const Sidebar = () => {
                                 <Button onClick={() => auth.signout({ callback: () => navigate("/logoutsuccess") })} className='button-link'><FontAwesomeIcon className='sidebar-icon me-2' icon={faArrowRightFromBracket} />abmelden</Button>
                             </div>
 
-                            {/* Button für Notification Test React Cookbook
-                            {'serviceWorker' in navigator && (
-                                <div>
-                                    <Button onClick={startTask}>Do slow thing</Button>
-                                </div>
-                            )}
-
-                            <div className='logout d-flex mt-3'>
-                                <Button onClick={startTask}>Do slow thing</Button>
-                            </div> */}
-
                         </>
                     )}
                 </ul>
 
             </div>
 
-            
             <OfflineStatus />
 
         </>

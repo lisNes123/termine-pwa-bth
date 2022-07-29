@@ -45,13 +45,12 @@ function useProvideAuth() {
         console.log(error);
       });
   };
-  const signup = ({name, email, password, callback}) => {
+  const signup = ({email, password, callback}) => {
     createUserWithEmailAndPassword(authApp, email, password)
       .then( async (response) => {
         setUser(response.user);
         await addDoc(collection(db, "users"), {
                 // uid: user.uid,
-                name,
                 authProvider: "local",
                 email,
               });

@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { firebaseApp } from '../firebase/config';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import GetMedia from './GetMedia';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
@@ -62,7 +61,7 @@ const Basisdaten = () => {
     const location = useLocation();
 
     const [title, setTitle] = useState(location?.state?.title ?? ""); //verhindert, dass Titelname null ist, wenn Formular nicht über den Kalender aufgerufen wurde
-    const [subtitle, setSubtitle] = useState(location?.state?.subtitle ?? "");
+    const [subtitle, setSubtitle] = useState(location?.state?.subtitle ?? ""); //verhindert, dass Daten aus Inputfelder entfernt werden, wenn der Nutzer über den Breadcrumb von Formular zwei zurück auf Formular 1 (Basisdaten) navigiert
     const [category, setCategory] = useState(location?.state?.category ?? "");
     const [veranstalter, setVeranstalter] = useState(location?.state?.veranstalter ?? "");
     const [ort, setOrt] = useState(location?.state?.ort ?? "");
@@ -74,10 +73,9 @@ const Basisdaten = () => {
     //Ausgewähltes Datum in Kalender in Formular-JS-Format umwandeln, sodass dieses direkt in Formular übernommen werden kann
     const selectedDate = location?.state?.selectedDate ?? new Date().getTime();
 
-    console.log("Date in Basisdaten:", selectedDate);
-
     //Vorschaubild Upload
-    //const [fileUrl, setFileUrl] = useState(location?.state?.image ?? "");
+    //in fileImage wird Bild gespeichert, wenn dieses über file-input hochgeladen wurde
+    //in blobImage wird Bild gespeichert, wenn dieses über GetMedia (MediaCapture) aufgenommen wurde
 
     const [fileImage, setFileImage] = useState("");
     const [blobImage, setBlobImage] = useState("");
@@ -90,43 +88,19 @@ const Basisdaten = () => {
         setFileImage(await getDownloadURL(fileRef))
 
     }
-
-    console.log("BLOB URL", blobImage); //richtig
-    console.log("IMAGE URL", fileImage); //richtig
-
     const passBlobImage = (blobFileURL) => {
-
-        console.log("contactDataNEU", blobFileURL)
-
         setBlobImage(blobFileURL);
-        console.log("BLOOOOOOOB", blobImage)
     };
-
-    // if (blobImage === "") {
-    //     setFileUrl(fileImage);
-    // } else {
-    //     setFileUrl(blobImage);
-    // }
-
-
-
 
 
     return (
         <div className="home">
 
-
             <h2>Termin anlegen</h2>
 
-
-
             <Container>
-
-
-
                 <Row>
                     <Col sm={12} md={12} lg={9} xl={9}>
-
                         <div className="breadcrumbs mt-4 mb-4 p-3">
                             <Breadcrumb>
                                 <Breadcrumb.Item active>Basisdaten</Breadcrumb.Item>
@@ -160,7 +134,7 @@ const Basisdaten = () => {
                                     value={category}
                                     onChange={(e) => {
                                         const selectedCategory = e.target.value;
-                                        setCategory(selectedCategory);  //https://www.youtube.com/watch?v=TahbDflPa8E
+                                        setCategory(selectedCategory);
                                     }}
                                 >
                                     <option value="-">-</option>
@@ -268,7 +242,6 @@ const Basisdaten = () => {
                             </Form.Group>
 
 
-                            {/* //validation */}
                             <div className='form-validation'>
                                 <p>{checkTitle}</p>
                                 <p>{checkSubtitle}</p>
@@ -283,10 +256,7 @@ const Basisdaten = () => {
                     <Col sm={12} md={12} lg={3} xl={3} className="ps-5">
                     </Col>
                 </Row>
-
             </Container>
-
-
         </div>
     );
 }

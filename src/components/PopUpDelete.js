@@ -1,4 +1,4 @@
-/*PopUp-Fenster: erscheint, wenn Termin bei vergangenem Datum eingetragen werden will*/
+/*PopUp-Fenster: überprüft nach Klick auf Termin löschen, ob Termin wirklich gelöscht werden soll*/
 
 import React, { useState } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
@@ -33,7 +33,6 @@ const PopUpDelete = (props) => {
 
     };
 
-
     const notifyDeleted = () => {
 
         Notification.requestPermission((permission) => {
@@ -48,17 +47,14 @@ const PopUpDelete = (props) => {
 
     };
 
-
     return (
 
         <Dialog open={true} >
 
             <DialogTitle className="d-flex justify-content-center popup-icon"><FontAwesomeIcon size="lg" icon={faQuestionCircle} /></DialogTitle>
-
             <DialogContent className="text-center">
                 <p>Soll dieser Termin wirklich gelöscht werden?</p>
             </DialogContent>
-
             <DialogActions className="d-flex justify-content-center">
                 <Button className="btn1" onClick={deleteCurrentEvent}>Ja, löschen</Button>
                 <Button className="btn-light" onClick={props.closeWindow}>Abbrechen</Button>

@@ -7,19 +7,11 @@ import { useState, useEffect } from 'react';
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from '../firebase/config';
 
-
 const DisplayDataInCalendar = () => {
 
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-
-
-    //Das hier iwo in useEffect reinsetzen, aber eventId ersetzen, oder nicht??
-    // if(doc.data().startDate.toDate() < new Date()){
-    //     await deleteDoc(doc(db, "termine", eventId));
-    // }
     
-
     useEffect(() => {
 
         //Termine-Dokumente werden aus der DB geholt
@@ -35,14 +27,14 @@ const DisplayDataInCalendar = () => {
                 }
             });
             setData([...array]);
-            console.log(array); //passt
+            console.log(array);
         })
         //unmounts
         return () => {unsub()}
 
     },[])
 
-    console.log("Daten für Kalendertermin aus DB: ", data); //passt
+    console.log("Daten für Kalendertermin aus DB: ", data);
     console.log("Data Id: ", data.id)
 
     //über Button gelangt man auf den Kalender und die eingetragenen Termine sind sichtbar
@@ -51,14 +43,10 @@ const DisplayDataInCalendar = () => {
         navigate(path, { state: { data } });
     }
 
-
     return (
         <div className="home">
-
             <h2>Termin anlegen</h2>
-
             <Button className='btn1 mt-3' type='button' onClick={AddDataToCalendar}>Zur Kalenderansicht</Button>
-
         </div>
     );
 }

@@ -1,4 +1,4 @@
-/*Login Seite, erscheint bei ersten Aufruf*/
+/*Login Seite, erscheint bei erstem Aufruf*/
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";

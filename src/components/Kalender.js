@@ -1,3 +1,5 @@
+/*Kalenderansicht, über welche Termine angezeigt und erstellt werden können*/
+
 import React from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -13,19 +15,14 @@ import { withRouterHOC } from './withRouterHOC';
 import { Container, Row, Col, Form } from "react-bootstrap";
 
 
-
 class Calendar extends React.Component {
 
     state = {
 
         weekendsVisible: true,
-
         currentEvents: [],
-
         show: false,
-
         dateClicked: null,
-
         popUp: false
 
     }
@@ -37,8 +34,6 @@ class Calendar extends React.Component {
     render() {
         
         const {location} = this.props;
-        console.log(location);
-        console.log("Data mit state: ", location.state.data); //passt
 
         return (
 
@@ -50,10 +45,10 @@ class Calendar extends React.Component {
                 <Col sm={12} md={12} lg={9} xl={9}  className='calendar-main ps-1 ps-sm-3 ps-md-3 ps-lg-4 pe-1 pe-sm-3 pe-md-3 pe-lg-4 mb-4'>
                 
                 {/* Add Event Box*/}
-                {this.state.show && <AddEvent handleClose={()=>this.setState({show: false})} clickedDate = {this.state.dateClicked} /*showForm={() => history.push('/termin/basisdaten', { from: "CalendarTest" })}*//>}
+                {this.state.show && <AddEvent handleClose={()=>this.setState({show: false})} clickedDate = {this.state.dateClicked} />}
 
                 {/* POP-UP */}
-                {this.state.popUp && <PopUpWindow handleClosePopUp={()=>this.setState({popUp: false})} clickedDate = {this.state.dateClicked} /*showForm={() => history.push('/termin/basisdaten', { from: "CalendarTest" })}*//>}
+                {this.state.popUp && <PopUpWindow handleClosePopUp={()=>this.setState({popUp: false})} clickedDate = {this.state.dateClicked} />}
 
                     <FullCalendar
 
@@ -75,8 +70,6 @@ class Calendar extends React.Component {
 
                         }}
 
-                       
-
                         buttonText={{
 
                             today: 'heutiges Datum',
@@ -84,8 +77,6 @@ class Calendar extends React.Component {
                             next: <FontAwesomeIcon className='sidebar-icon' icon={faChevronRight} />
 
                         }}
-
-                       
 
                         eventBackgroundColor='#218199'
 
@@ -173,26 +164,19 @@ class Calendar extends React.Component {
         const {navigate} = this.props;
 
         const docId = clickInfo.event.id;
-        console.log(docId);
         
         navigate("/termindetails", {state: {docId}});
 
     }
 
-
-
     handleDateClick = (selectInfo) => {
 
     const selectedDay = selectInfo.dateStr;
-    console.log("Selected day: ", selectedDay);
 
     const formatYmd = date => date.toISOString().slice(0, 10);
     const today = formatYmd(new Date());  
-    console.log("Today's date: ", today)
-
 
     if (selectedDay < today){
-
         this.updateStatePopUp()
             
        }else{

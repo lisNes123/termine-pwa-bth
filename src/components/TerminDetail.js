@@ -21,14 +21,7 @@ const TerminDetail = () => {
 
     const eventId = location.state.docId;  //hier steht docId des Termins, der in Übersicht ausgewählt wurde
 
-    console.log(eventId);
-
-    console.log(postEvent);
-
     const [data, setData] = useState([]);
-
-    console.log("data",data);
-
 
     useEffect(() => {
         async function fetchData() {
@@ -47,15 +40,9 @@ const TerminDetail = () => {
             const dateStartICS = getDateStart.toDate();
             const dateEndICS = getDateEnd.toDate();
 
-            console.log("localDateBeginn", beginnDatum);
-            console.log("toDateBeginn", dateStartICS);
-
-            console.log(title);
-
             //speichert Array mit Kontaktdaten in useState data (so kann unten durch data gemapt werden)
             setData((docSnap.data().kontakte.map((prop) => prop))); 
             
-
             selectedDocument = {
                 ...docSnap.data(),
                 key: docSnap.id,
@@ -67,45 +54,21 @@ const TerminDetail = () => {
                 ortEvent: ort
             };
 
-
             setPostEvent(selectedDocument);
-
-            console.log("Title Event: ", postEvent.titleEvent);
-            console.log("Title Event: ", postEvent.key);
 
         }
         fetchData();
-    }, [eventId, postEvent.key, postEvent.titleEvent]); //needed to add dependencies in order to avoid an infinite loop 
+    }, [eventId, postEvent.key, postEvent.titleEvent]);
 
-
-   // const [currentEvent, setCurrentEvent] = useState();
-
-    //Bei Klick auf Termin löschen wird Termin aus DB entfernt und erscheint somit nicht mehr in der Terminübersicht oder im Kalender
+    //Bei Klick auf Termin löschen wird Pop-Up-Fenster angezeigt (extra Component: PopUpDelete), das fragt, ob Termin wirklich gelöscht werden soll
     const deleteEvent = () => {
-        //const currentEvent = await getDoc(doc(db, "termine", eventId));
-        //setCurrentEvent(currentEvent);
-
-        // let path = '/termin-loeschen';
-        // const currentEvent = postEvent.key;
-        // navigate(path, { state: { currentEvent } });
-
         setVisible(true);
-
-
-        // await deleteDoc(doc(db, "termine", eventId));
-        // let path = '/terminuebersicht';
-        // navigate(path);
-        // notifyDeleted();
     };
 
-
-
-    //Test ICAL neu
-
+    //ICS-Datei für Eintrag des Termins im lokalen Kalender
     const createICSFile = (start, end, title, ort, beschreibung) => {
 
         const startICS = start;
-        console.log("Start", startICS);
         const endICS = end;
         const titleICS = title;
         const descriptionICS = beschreibung;
@@ -121,8 +84,6 @@ const TerminDetail = () => {
 
         return event;
     };
-
-
 
     return (
         <div className="terminvorschau">
@@ -195,16 +156,11 @@ const TerminDetail = () => {
                     <Col sm={12} md={12} lg={3} xl={3}></Col>
                 </Row>
 
-
                 {visible &&
                         <PopUpDelete currentEvent = {eventId} closeWindow={()=>setVisible(false)}/>
                     }
 
-
             </Container>
-
-
-            
 
         </div>
 

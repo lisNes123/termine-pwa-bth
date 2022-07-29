@@ -12,7 +12,6 @@ const Terminuebersicht = () => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
 
-
     useEffect(() => {
         async function getValue() {
 
@@ -22,18 +21,13 @@ const Terminuebersicht = () => {
             const q = query(docRef, orderBy("startDatum", "asc"));
             const querySnapshot = await getDocs(q);
 
-
             querySnapshot.forEach((doc) => {
                 console.log(doc.id, " => ", doc.data());
-                const title = doc.data().titel;
                 const optionsDate = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric', hour12: false, hour: '2-digit', minute: '2-digit' };
                 const getDateStart = doc.data().startDatum
                 const beginnDatum = getDateStart.toDate().toLocaleDateString('de-DE', optionsDate);
                 const getDateEnd = doc.data().endeDatum
                 const endeDatum = getDateEnd.toDate().toLocaleDateString('de-DE', optionsDate);
-
-                console.log("Beginn: ", beginnDatum);
-                console.log(title);
 
                 getPostsFromFirebase.push({
                     ...doc.data(),
@@ -53,16 +47,13 @@ const Terminuebersicht = () => {
     function routeToTerminDetailseite(postId) {
         let path = '/termindetails';
         const docId = postId;
-        console.log(docId);
         navigate(path, { state: { docId } });
     }
-
 
     return (
         <div className="terminvorschau">
 
             <h2 className="mb-4">Terminübersicht</h2>
-
             <h6>Termine sind nach Startdatum geordnet</h6>
 
             {posts.length > 0 ? (

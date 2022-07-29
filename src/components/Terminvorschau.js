@@ -1,4 +1,4 @@
-/*Termin nachdem dieser hinzugefügt wurde anzeigen*/
+/*Termin, nachdem dieser hinzugefügt wurde anzeigen*/
 
 import { useEffect, useState } from "react";
 import { db } from '../firebase/config';
@@ -23,7 +23,6 @@ const Terminvorschau = () => {
             const q = query(docRef, orderBy("createdAt", "desc"), limit(1));
             const querySnapshot = await getDocs(q);
 
-
             querySnapshot.forEach((doc) => {
                 console.log(doc.id, " => ", doc.data());
                 const title = doc.data().titel;
@@ -35,9 +34,6 @@ const Terminvorschau = () => {
 
                 const dateStartICS = getDateStart.toDate();
                 const dateEndICS = getDateEnd.toDate();
-
-                console.log(beginnDatum);
-                console.log(title);
 
                 getPostsFromFirebase.push({
                     ...doc.data(),
@@ -53,7 +49,7 @@ const Terminvorschau = () => {
             });
         }
         fetchData();
-    }, []); //needed to add dependencies in order to avoid an infinite loop 
+    }, []); 
 
 
     const navigate = useNavigate();
@@ -61,17 +57,12 @@ const Terminvorschau = () => {
     const routeToStart = async () => {
         let path = '/';
         navigate(path);
-
     };
 
-
-
-     //Test ICAL neu
-
+     //Kalender ICS-Datei
      const createICSFile = (start, end, title, ort, beschreibung) => {
 
         const startICS = start;
-        console.log("Start", startICS);
         const endICS = end;
         const titleICS = title;
         const descriptionICS = beschreibung;
@@ -88,15 +79,10 @@ const Terminvorschau = () => {
         return event;
     };
 
-
-
     return (
         <div className="terminvorschau">
 
             <h2>Terminvorschau</h2>
-
-
-
 
             {/* Auslesen der Termine-Dokumente aus der DB */}
             {posts.map((post) =>
@@ -168,9 +154,6 @@ const Terminvorschau = () => {
                     </Container>
 
                 </div>)}
-
-
-
         </div>
 
     );

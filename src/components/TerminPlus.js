@@ -10,15 +10,12 @@ import { Container, Row, Col } from "react-bootstrap";
 
 const TerminPlus = () => {
 
-
     useEffect(() => {
 
         //Funktion für das Löschen von alten Terminen
         async function deleteOutdatedDocs() {
 
             const now = new Date();
-            console.log("Date now: ", now);
-
             const docsRef = collection(db, "termine");
             const outdatedDocs = query(docsRef, where("startDate", "<", now));
             const outdatedPosts = await getDocs(outdatedDocs);
@@ -41,7 +38,6 @@ const TerminPlus = () => {
         <div className="home">
 
             <Container className="login__container">
-
                 <Row>
                     <Col sm={12} md={12} lg={4} xl={6} className="d-flex flex-column align-items-center">
                         <Link to="/termin/basisdaten">
@@ -51,9 +47,7 @@ const TerminPlus = () => {
                     </Col>
                     <Col sm={12} md={12} lg={8} xl={6}></Col>
                 </Row>
-
             </Container>
-
 
         </div>
 
